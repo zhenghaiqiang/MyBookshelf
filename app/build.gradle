@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'io.fabric'
 
 static def releaseTime() {
     return new Date().format("yy.MMddHH", TimeZone.getTimeZone("GMT+8"))
@@ -15,10 +14,10 @@ android {
     buildToolsVersion '28.0.3'
     signingConfigs {
         myConfig {
-            storeFile file(RELEASE_STORE_FILE)
-            storePassword RELEASE_KEY_PASSWORD
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_STORE_PASSWORD
+            keyAlias 'zhqdebug'
+            keyPassword 'wbzdghdn'
+            storeFile file('debug/zhqdebug.jks')
+            storePassword 'wbzdghdn'
         }
     }
 
@@ -40,15 +39,11 @@ android {
         release {
             buildConfigField "boolean", "IS_RELEASE", "true"
             minifyEnabled true
+            signingConfig signingConfigs.myConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            signingConfig signingConfigs.myConfig
-            applicationIdSuffix '.debug'
-            versionNameSuffix ' debug'
             buildConfigField "boolean", "IS_RELEASE", "false"
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         android.applicationVariants.all { variant ->
             variant.outputs.all {
@@ -68,9 +63,6 @@ dependencies {
     implementation project(':basemvplib')
     testImplementation 'junit:junit:4.12'
 
-    //fireBase
-    //noinspection GradleDependency
-    implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
 
     //androidX
@@ -135,5 +127,3 @@ greendao {
     daoPackage 'com.kunfei.bookshelf.dao'
     targetGenDir 'src/main/java'
 }
-
-apply plugin: 'com.google.gms.google-services'

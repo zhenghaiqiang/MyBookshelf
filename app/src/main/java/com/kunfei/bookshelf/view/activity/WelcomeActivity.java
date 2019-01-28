@@ -12,6 +12,7 @@ import com.kunfei.bookshelf.R;
 import com.kunfei.bookshelf.base.MBaseActivity;
 import com.kunfei.bookshelf.dao.DbHelper;
 import com.kunfei.bookshelf.presenter.ReadBookPresenter;
+import com.kunfei.bookshelf.utils.BackUpUtils;
 import com.kunfei.bookshelf.utils.Theme.ThemeStore;
 
 import butterknife.BindView;
@@ -71,6 +72,7 @@ public class WelcomeActivity extends MBaseActivity {
             }
         });
         welAnimator.start();
+        BackUpUtils.copyDefaultFile(this);
     }
 
     private void startBookshelfActivity() {
