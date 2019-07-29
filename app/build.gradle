@@ -17,15 +17,15 @@ android {
     buildToolsVersion '28.0.3'
     signingConfigs {
         myConfig {
-            storeFile file(RELEASE_STORE_FILE)
-            storePassword RELEASE_KEY_PASSWORD
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_STORE_PASSWORD
+            keyAlias 'zhqdebug'
+            keyPassword 'wbzdghdn'
+            storeFile file('debug/zhqdebug.jks')
+            storePassword 'wbzdghdn'
         }
     }
 
     defaultConfig {
-        applicationId "com.gedoor.monkeybook"
+        applicationId "com.zhenghaiqiang.yuedu"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 10000 + gitCommits
@@ -40,16 +40,13 @@ android {
     }
     buildTypes {
         release {
+            buildConfigField "boolean", "IS_RELEASE", "true"
+            minifyEnabled true
             signingConfig signingConfigs.myConfig
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            signingConfig signingConfigs.myConfig
-            applicationIdSuffix '.debug'
-            versionNameSuffix 'debug'
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "IS_RELEASE", "false"
         }
         android.applicationVariants.all { variant ->
             variant.outputs.all {
